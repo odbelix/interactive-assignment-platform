@@ -51,6 +51,11 @@ class Course
     protected $accesscode;
 
     /**
+     * @ORM\Column(name="`language`", type="string", length=2, nullable=true)
+     */
+    protected $language;
+
+    /**
      * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="course")
      * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
      */
@@ -230,6 +235,29 @@ class Course
     }
 
     /**
+     * Set the value of language.
+     *
+     * @param string $language
+     * @return \CoreBundle\Entity\Course
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of language.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
      * Add Enrollment entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\Enrollment $enrollment
@@ -303,6 +331,6 @@ class Course
 
     public function __sleep()
     {
-        return array('id', 'code', 'teacher', 'email', 'year', 'period', 'accesscode');
+        return array('id', 'code', 'teacher', 'email', 'year', 'period', 'accesscode', 'language');
     }
 }
