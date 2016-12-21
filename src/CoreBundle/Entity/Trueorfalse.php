@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreBundle\Entity\Trueorfalse
  *
  * @ORM\Entity()
- * @ORM\Table(name="trueorfalse", indexes={@ORM\Index(name="fk_trueorfalse_session1_idx", columns={"session_id"})})
+ * @ORM\Table(name="trueorfalse", indexes={@ORM\Index(name="fk_trueorfalse_session1_idx", columns={"session_id"}), @ORM\Index(name="fk_trueorfalse_course1_idx", columns={"course_id"})})
  */
 class Trueorfalse
 {
@@ -47,16 +47,6 @@ class Trueorfalse
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $option1;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $option2;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     protected $active;
 
     /**
@@ -65,10 +55,21 @@ class Trueorfalse
     protected $session_id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $course_id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="trueorfalses")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
     protected $session;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="trueorfalses")
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=false)
+     */
+    protected $course;
 
     public function __construct()
     {
@@ -213,52 +214,6 @@ class Trueorfalse
     }
 
     /**
-     * Set the value of option1.
-     *
-     * @param boolean $option1
-     * @return \CoreBundle\Entity\Trueorfalse
-     */
-    public function setOption1($option1)
-    {
-        $this->option1 = $option1;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of option1.
-     *
-     * @return boolean
-     */
-    public function getOption1()
-    {
-        return $this->option1;
-    }
-
-    /**
-     * Set the value of option2.
-     *
-     * @param boolean $option2
-     * @return \CoreBundle\Entity\Trueorfalse
-     */
-    public function setOption2($option2)
-    {
-        $this->option2 = $option2;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of option2.
-     *
-     * @return boolean
-     */
-    public function getOption2()
-    {
-        return $this->option2;
-    }
-
-    /**
      * Set the value of active.
      *
      * @param boolean $active
@@ -305,6 +260,29 @@ class Trueorfalse
     }
 
     /**
+     * Set the value of course_id.
+     *
+     * @param integer $course_id
+     * @return \CoreBundle\Entity\Trueorfalse
+     */
+    public function setCourseId($course_id)
+    {
+        $this->course_id = $course_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of course_id.
+     *
+     * @return integer
+     */
+    public function getCourseId()
+    {
+        return $this->course_id;
+    }
+
+    /**
      * Set Session entity (many to one).
      *
      * @param \CoreBundle\Entity\Session $session
@@ -327,8 +305,31 @@ class Trueorfalse
         return $this->session;
     }
 
+    /**
+     * Set Course entity (many to one).
+     *
+     * @param \CoreBundle\Entity\Course $course
+     * @return \CoreBundle\Entity\Trueorfalse
+     */
+    public function setCourse(Course $course = null)
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * Get Course entity (many to one).
+     *
+     * @return \CoreBundle\Entity\Course
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
     public function __sleep()
     {
-        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'correctoption', 'option1', 'option2', 'active', 'session_id');
+        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'correctoption', 'active', 'session_id', 'course_id');
     }
 }

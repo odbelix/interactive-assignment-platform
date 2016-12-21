@@ -3,3 +3,23 @@ course:
      type:     rest
      prefix:   api/v1
      resource: ApiBundle\Controller\CourseController
+
+session:
+     type:     rest
+     prefix:   api/v1
+     resource: ApiBundle\Controller\SessionController
+
+trueorfalse:
+     type:     rest
+     prefix:   api/v1
+     resource: ApiBundle\Controller\TrueorfalseController
+
+shortanswer:
+     type:     rest
+     prefix:   api/v1
+     resource: ApiBundle\Controller\ShortanswerController
+
+multiplechoice:
+     type:    rest
+     prefix:  api/v1
+     resource: ApiBundle\Controller\MultiplechoiceController

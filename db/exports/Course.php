@@ -26,6 +26,11 @@ class Course
     protected $code;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdat;
+
+    /**
      * @ORM\Column(type="string", length=45)
      */
     protected $teacher;
@@ -62,15 +67,36 @@ class Course
     protected $enrollments;
 
     /**
+     * @ORM\OneToMany(targetEntity="Multiplechoice", mappedBy="course")
+     * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
+     */
+    protected $multiplechoices;
+
+    /**
      * @ORM\OneToMany(targetEntity="Session", mappedBy="course")
      * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
      */
     protected $sessions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Shortanswer", mappedBy="course")
+     * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
+     */
+    protected $shortanswers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Trueorfalse", mappedBy="course")
+     * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
+     */
+    protected $trueorfalses;
+
     public function __construct()
     {
         $this->enrollments = new ArrayCollection();
+        $this->multiplechoices = new ArrayCollection();
         $this->sessions = new ArrayCollection();
+        $this->shortanswers = new ArrayCollection();
+        $this->trueorfalses = new ArrayCollection();
     }
 
     /**
@@ -117,6 +143,29 @@ class Course
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set the value of createdat.
+     *
+     * @param \DateTime $createdat
+     * @return \CoreBundle\Entity\Course
+     */
+    public function setCreatedat($createdat)
+    {
+        $this->createdat = $createdat;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of createdat.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedat()
+    {
+        return $this->createdat;
     }
 
     /**
@@ -294,6 +343,42 @@ class Course
     }
 
     /**
+     * Add Multiplechoice entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Multiplechoice $multiplechoice
+     * @return \CoreBundle\Entity\Course
+     */
+    public function addMultiplechoice(Multiplechoice $multiplechoice)
+    {
+        $this->multiplechoices[] = $multiplechoice;
+
+        return $this;
+    }
+
+    /**
+     * Remove Multiplechoice entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Multiplechoice $multiplechoice
+     * @return \CoreBundle\Entity\Course
+     */
+    public function removeMultiplechoice(Multiplechoice $multiplechoice)
+    {
+        $this->multiplechoices->removeElement($multiplechoice);
+
+        return $this;
+    }
+
+    /**
+     * Get Multiplechoice entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMultiplechoices()
+    {
+        return $this->multiplechoices;
+    }
+
+    /**
      * Add Session entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\Session $session
@@ -329,8 +414,80 @@ class Course
         return $this->sessions;
     }
 
+    /**
+     * Add Shortanswer entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Shortanswer $shortanswer
+     * @return \CoreBundle\Entity\Course
+     */
+    public function addShortanswer(Shortanswer $shortanswer)
+    {
+        $this->shortanswers[] = $shortanswer;
+
+        return $this;
+    }
+
+    /**
+     * Remove Shortanswer entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Shortanswer $shortanswer
+     * @return \CoreBundle\Entity\Course
+     */
+    public function removeShortanswer(Shortanswer $shortanswer)
+    {
+        $this->shortanswers->removeElement($shortanswer);
+
+        return $this;
+    }
+
+    /**
+     * Get Shortanswer entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShortanswers()
+    {
+        return $this->shortanswers;
+    }
+
+    /**
+     * Add Trueorfalse entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Trueorfalse $trueorfalse
+     * @return \CoreBundle\Entity\Course
+     */
+    public function addTrueorfalse(Trueorfalse $trueorfalse)
+    {
+        $this->trueorfalses[] = $trueorfalse;
+
+        return $this;
+    }
+
+    /**
+     * Remove Trueorfalse entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Trueorfalse $trueorfalse
+     * @return \CoreBundle\Entity\Course
+     */
+    public function removeTrueorfalse(Trueorfalse $trueorfalse)
+    {
+        $this->trueorfalses->removeElement($trueorfalse);
+
+        return $this;
+    }
+
+    /**
+     * Get Trueorfalse entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrueorfalses()
+    {
+        return $this->trueorfalses;
+    }
+
     public function __sleep()
     {
-        return array('id', 'code', 'teacher', 'email', 'year', 'period', 'accesscode', 'language');
+        return array('id', 'code', 'createdat', 'teacher', 'email', 'year', 'period', 'accesscode', 'language');
     }
 }

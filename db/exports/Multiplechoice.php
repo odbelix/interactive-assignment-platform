@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreBundle\Entity\Multiplechoice
  *
  * @ORM\Entity()
- * @ORM\Table(name="multiplechoice", indexes={@ORM\Index(name="fk_multiplechoice_session1_idx", columns={"session_id"})})
+ * @ORM\Table(name="multiplechoice", indexes={@ORM\Index(name="fk_multiplechoice_session1_idx", columns={"session_id"}), @ORM\Index(name="fk_multiplechoice_course1_idx", columns={"course_id"})})
  */
 class Multiplechoice
 {
@@ -75,10 +75,21 @@ class Multiplechoice
     protected $session_id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $course_id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="multiplechoices")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
     protected $session;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="multiplechoices")
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=false)
+     */
+    protected $course;
 
     public function __construct()
     {
@@ -361,6 +372,29 @@ class Multiplechoice
     }
 
     /**
+     * Set the value of course_id.
+     *
+     * @param integer $course_id
+     * @return \CoreBundle\Entity\Multiplechoice
+     */
+    public function setCourseId($course_id)
+    {
+        $this->course_id = $course_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of course_id.
+     *
+     * @return integer
+     */
+    public function getCourseId()
+    {
+        return $this->course_id;
+    }
+
+    /**
      * Set Session entity (many to one).
      *
      * @param \CoreBundle\Entity\Session $session
@@ -383,8 +417,31 @@ class Multiplechoice
         return $this->session;
     }
 
+    /**
+     * Set Course entity (many to one).
+     *
+     * @param \CoreBundle\Entity\Course $course
+     * @return \CoreBundle\Entity\Multiplechoice
+     */
+    public function setCourse(Course $course = null)
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * Get Course entity (many to one).
+     *
+     * @return \CoreBundle\Entity\Course
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
     public function __sleep()
     {
-        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'correctoption', 'option1', 'option2', 'option3', 'option4', 'active', 'session_id');
+        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'correctoption', 'option1', 'option2', 'option3', 'option4', 'active', 'session_id', 'course_id');
     }
 }

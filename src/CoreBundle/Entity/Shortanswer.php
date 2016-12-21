@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreBundle\Entity\Shortanswer
  *
  * @ORM\Entity()
- * @ORM\Table(name="shortanswer", indexes={@ORM\Index(name="fk_shortanswer_session1_idx", columns={"session_id"})})
+ * @ORM\Table(name="shortanswer", indexes={@ORM\Index(name="fk_shortanswer_session1_idx", columns={"session_id"}), @ORM\Index(name="fk_shortanswer_course1_idx", columns={"course_id"})})
  */
 class Shortanswer
 {
@@ -55,10 +55,21 @@ class Shortanswer
     protected $session_id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $course_id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="shortanswers")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
     protected $session;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="shortanswers")
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=false)
+     */
+    protected $course;
 
     public function __construct()
     {
@@ -249,6 +260,29 @@ class Shortanswer
     }
 
     /**
+     * Set the value of course_id.
+     *
+     * @param integer $course_id
+     * @return \CoreBundle\Entity\Shortanswer
+     */
+    public function setCourseId($course_id)
+    {
+        $this->course_id = $course_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of course_id.
+     *
+     * @return integer
+     */
+    public function getCourseId()
+    {
+        return $this->course_id;
+    }
+
+    /**
      * Set Session entity (many to one).
      *
      * @param \CoreBundle\Entity\Session $session
@@ -271,8 +305,31 @@ class Shortanswer
         return $this->session;
     }
 
+    /**
+     * Set Course entity (many to one).
+     *
+     * @param \CoreBundle\Entity\Course $course
+     * @return \CoreBundle\Entity\Shortanswer
+     */
+    public function setCourse(Course $course = null)
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * Get Course entity (many to one).
+     *
+     * @return \CoreBundle\Entity\Course
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
     public function __sleep()
     {
-        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'suggestion', 'active', 'session_id');
+        return array('id', 'title', 'detail', 'createdat', 'lastchanges', 'suggestion', 'active', 'session_id', 'course_id');
     }
 }
