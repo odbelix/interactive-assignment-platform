@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * CoreBundle\Entity\Shortanswer
@@ -60,6 +61,12 @@ class Shortanswer
     protected $course_id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ResultShortanswer", mappedBy="shortanswer")
+     * @ORM\JoinColumn(name="id", referencedColumnName="shortanswer_id", nullable=false)
+     */
+    protected $resultShortanswers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="shortanswers")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
@@ -73,6 +80,7 @@ class Shortanswer
 
     public function __construct()
     {
+        $this->resultShortanswers = new ArrayCollection();
     }
 
     /**
@@ -280,6 +288,42 @@ class Shortanswer
     public function getCourseId()
     {
         return $this->course_id;
+    }
+
+    /**
+     * Add ResultShortanswer entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultShortanswer $resultShortanswer
+     * @return \CoreBundle\Entity\Shortanswer
+     */
+    public function addResultShortanswer(ResultShortanswer $resultShortanswer)
+    {
+        $this->resultShortanswers[] = $resultShortanswer;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultShortanswer entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultShortanswer $resultShortanswer
+     * @return \CoreBundle\Entity\Shortanswer
+     */
+    public function removeResultShortanswer(ResultShortanswer $resultShortanswer)
+    {
+        $this->resultShortanswers->removeElement($resultShortanswer);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultShortanswer entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultShortanswers()
+    {
+        return $this->resultShortanswers;
     }
 
     /**

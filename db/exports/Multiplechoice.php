@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * CoreBundle\Entity\Multiplechoice
@@ -80,6 +81,12 @@ class Multiplechoice
     protected $course_id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ResultMultiplechoice", mappedBy="multiplechoice")
+     * @ORM\JoinColumn(name="id", referencedColumnName="multiplechoice_id", nullable=false)
+     */
+    protected $resultMultiplechoices;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="multiplechoices")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
@@ -93,6 +100,7 @@ class Multiplechoice
 
     public function __construct()
     {
+        $this->resultMultiplechoices = new ArrayCollection();
     }
 
     /**
@@ -392,6 +400,42 @@ class Multiplechoice
     public function getCourseId()
     {
         return $this->course_id;
+    }
+
+    /**
+     * Add ResultMultiplechoice entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultMultiplechoice $resultMultiplechoice
+     * @return \CoreBundle\Entity\Multiplechoice
+     */
+    public function addResultMultiplechoice(ResultMultiplechoice $resultMultiplechoice)
+    {
+        $this->resultMultiplechoices[] = $resultMultiplechoice;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultMultiplechoice entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultMultiplechoice $resultMultiplechoice
+     * @return \CoreBundle\Entity\Multiplechoice
+     */
+    public function removeResultMultiplechoice(ResultMultiplechoice $resultMultiplechoice)
+    {
+        $this->resultMultiplechoices->removeElement($resultMultiplechoice);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultMultiplechoice entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultMultiplechoices()
+    {
+        return $this->resultMultiplechoices;
     }
 
     /**

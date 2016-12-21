@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * CoreBundle\Entity\Trueorfalse
@@ -60,6 +61,12 @@ class Trueorfalse
     protected $course_id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ResultTrueorfalse", mappedBy="trueorfalse")
+     * @ORM\JoinColumn(name="id", referencedColumnName="trueorfalse_id", nullable=false)
+     */
+    protected $resultTrueorfalses;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="trueorfalses")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
      */
@@ -73,6 +80,7 @@ class Trueorfalse
 
     public function __construct()
     {
+        $this->resultTrueorfalses = new ArrayCollection();
     }
 
     /**
@@ -280,6 +288,42 @@ class Trueorfalse
     public function getCourseId()
     {
         return $this->course_id;
+    }
+
+    /**
+     * Add ResultTrueorfalse entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultTrueorfalse $resultTrueorfalse
+     * @return \CoreBundle\Entity\Trueorfalse
+     */
+    public function addResultTrueorfalse(ResultTrueorfalse $resultTrueorfalse)
+    {
+        $this->resultTrueorfalses[] = $resultTrueorfalse;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultTrueorfalse entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultTrueorfalse $resultTrueorfalse
+     * @return \CoreBundle\Entity\Trueorfalse
+     */
+    public function removeResultTrueorfalse(ResultTrueorfalse $resultTrueorfalse)
+    {
+        $this->resultTrueorfalses->removeElement($resultTrueorfalse);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultTrueorfalse entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultTrueorfalses()
+    {
+        return $this->resultTrueorfalses;
     }
 
     /**

@@ -57,6 +57,24 @@ class Session
     protected $multiplechoices;
 
     /**
+     * @ORM\OneToMany(targetEntity="ResultMultiplechoice", mappedBy="session")
+     * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
+     */
+    protected $resultMultiplechoices;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ResultShortanswer", mappedBy="session")
+     * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
+     */
+    protected $resultShortanswers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ResultTrueorfalse", mappedBy="session")
+     * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
+     */
+    protected $resultTrueorfalses;
+
+    /**
      * @ORM\OneToMany(targetEntity="Shortanswer", mappedBy="session")
      * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
      */
@@ -77,6 +95,9 @@ class Session
     public function __construct()
     {
         $this->multiplechoices = new ArrayCollection();
+        $this->resultMultiplechoices = new ArrayCollection();
+        $this->resultShortanswers = new ArrayCollection();
+        $this->resultTrueorfalses = new ArrayCollection();
         $this->shortanswers = new ArrayCollection();
         $this->trueorfalses = new ArrayCollection();
     }
@@ -276,6 +297,114 @@ class Session
     public function getMultiplechoices()
     {
         return $this->multiplechoices;
+    }
+
+    /**
+     * Add ResultMultiplechoice entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultMultiplechoice $resultMultiplechoice
+     * @return \CoreBundle\Entity\Session
+     */
+    public function addResultMultiplechoice(ResultMultiplechoice $resultMultiplechoice)
+    {
+        $this->resultMultiplechoices[] = $resultMultiplechoice;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultMultiplechoice entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultMultiplechoice $resultMultiplechoice
+     * @return \CoreBundle\Entity\Session
+     */
+    public function removeResultMultiplechoice(ResultMultiplechoice $resultMultiplechoice)
+    {
+        $this->resultMultiplechoices->removeElement($resultMultiplechoice);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultMultiplechoice entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultMultiplechoices()
+    {
+        return $this->resultMultiplechoices;
+    }
+
+    /**
+     * Add ResultShortanswer entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultShortanswer $resultShortanswer
+     * @return \CoreBundle\Entity\Session
+     */
+    public function addResultShortanswer(ResultShortanswer $resultShortanswer)
+    {
+        $this->resultShortanswers[] = $resultShortanswer;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultShortanswer entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultShortanswer $resultShortanswer
+     * @return \CoreBundle\Entity\Session
+     */
+    public function removeResultShortanswer(ResultShortanswer $resultShortanswer)
+    {
+        $this->resultShortanswers->removeElement($resultShortanswer);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultShortanswer entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultShortanswers()
+    {
+        return $this->resultShortanswers;
+    }
+
+    /**
+     * Add ResultTrueorfalse entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultTrueorfalse $resultTrueorfalse
+     * @return \CoreBundle\Entity\Session
+     */
+    public function addResultTrueorfalse(ResultTrueorfalse $resultTrueorfalse)
+    {
+        $this->resultTrueorfalses[] = $resultTrueorfalse;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultTrueorfalse entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultTrueorfalse $resultTrueorfalse
+     * @return \CoreBundle\Entity\Session
+     */
+    public function removeResultTrueorfalse(ResultTrueorfalse $resultTrueorfalse)
+    {
+        $this->resultTrueorfalses->removeElement($resultTrueorfalse);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultTrueorfalse entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultTrueorfalses()
+    {
+        return $this->resultTrueorfalses;
     }
 
     /**

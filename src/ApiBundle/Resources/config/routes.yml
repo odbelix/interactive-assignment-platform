@@ -23,3 +23,9 @@ multiplechoice:
      type:    rest
      prefix:  api/v1
      resource: ApiBundle\Controller\MultiplechoiceController
+
+
+mobile:
+     type:    rest
+     prefix:  api/v1
+     resource: ApiBundle\Controller\MobileController
