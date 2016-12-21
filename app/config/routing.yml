@@ -1,0 +1,31 @@
+#api:
+#    resource: "@ApiBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
+core:
+    resource: "@CoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+api:
+    type: rest
+    prefix: /
+    resource: "@ApiBundle/Resources/config/routes.yml"
+
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+
+## For API
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix: /api/doc
+
+## FORUSER
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+

@@ -1,0 +1,5 @@
+#API
+course:
+     type:     rest
+     prefix:   api/v1
+     resource: ApiBundle\Controller\CourseController
