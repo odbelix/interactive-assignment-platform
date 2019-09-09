@@ -51,6 +51,11 @@ class Session
     protected $course_id;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $participants;
+
+    /**
      * @ORM\OneToMany(targetEntity="Multiplechoice", mappedBy="session")
      * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
      */
@@ -261,6 +266,29 @@ class Session
     public function getCourseId()
     {
         return $this->course_id;
+    }
+
+    /**
+     * Set the value of participants.
+     *
+     * @param integer $participants
+     * @return \CoreBundle\Entity\Session
+     */
+    public function setParticipants($participants)
+    {
+        $this->participants = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of participants.
+     *
+     * @return integer
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
     }
 
     /**
@@ -504,6 +532,6 @@ class Session
 
     public function __sleep()
     {
-        return array('id', 'title', 'detail', 'createdat', 'finishedat', 'order', 'course_id');
+        return array('id', 'title', 'detail', 'createdat', 'finishedat', 'order', 'course_id', 'participants');
     }
 }

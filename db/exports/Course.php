@@ -61,6 +61,11 @@ class Course
     protected $language;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $totalparticipants;
+
+    /**
      * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="course")
      * @ORM\JoinColumn(name="id", referencedColumnName="course_id", nullable=false)
      */
@@ -325,6 +330,29 @@ class Course
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set the value of totalparticipants.
+     *
+     * @param integer $totalparticipants
+     * @return \CoreBundle\Entity\Course
+     */
+    public function setTotalparticipants($totalparticipants)
+    {
+        $this->totalparticipants = $totalparticipants;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of totalparticipants.
+     *
+     * @return integer
+     */
+    public function getTotalparticipants()
+    {
+        return $this->totalparticipants;
     }
 
     /**
@@ -617,6 +645,6 @@ class Course
 
     public function __sleep()
     {
-        return array('id', 'code', 'createdat', 'teacher', 'email', 'year', 'period', 'accesscode', 'language');
+        return array('id', 'code', 'createdat', 'teacher', 'email', 'year', 'period', 'accesscode', 'language', 'totalparticipants');
     }
 }
